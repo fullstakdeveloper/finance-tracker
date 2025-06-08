@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import axios from 'axios';
+import './App.css';
 
 function App() {
   const [title, setTitle] = useState("");
@@ -10,6 +9,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios.get("https://localhost:8080");
   }
 
 
@@ -33,7 +33,7 @@ function App() {
         />
 
         <button 
-          className = "border w-[100px]"
+          className = "border w-[100px] hover:bg-amber-100"
           onClick = {handleSubmit}
           type = "submit"
         >Submit</button>
