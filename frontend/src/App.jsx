@@ -9,7 +9,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.get("http://localhost:8080/api");
+    axios.get("http://localhost:8080/post");
   }
 
 

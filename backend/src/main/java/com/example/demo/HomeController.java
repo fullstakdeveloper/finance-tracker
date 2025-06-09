@@ -10,9 +10,17 @@ public class HomeController {
         return "index.html";
     }
 
-    @GetMapping("/api")
-    public void result() {
+    //sends the get request to this method
+    @GetMapping("/get")
+    public void get() {
         System.out.println("The request went through");
+        System.out.println("This is the get request, write backend");
+    }
+
+    //sends the pst request to this method
+    @GetMapping("/post")
+    public void post() {
+        System.out.println("Write backend to send to the database");
     }
 }
 
