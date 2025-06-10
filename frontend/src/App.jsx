@@ -10,6 +10,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post("http://localhost:8080/post", {Name: "Jashan"});
+    // where do I use await and stuff??
   }
 
 
