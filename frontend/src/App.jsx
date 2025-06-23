@@ -9,11 +9,13 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8080/post", {Name: "Jashan"});
-    // where do I use await and stuff??
+    axios.post("http://localhost:8080/post", {
+      title: title, 
+      value: value, 
+    });
   }
 
-
+ 
   return (
     <div className = "flex flex-col m-[5px]">
       <form className  = "flex flex-col">
