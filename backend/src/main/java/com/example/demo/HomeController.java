@@ -10,9 +10,10 @@ public class HomeController {
     //sends the pst request to this method
     @PostMapping("/post")
     public void post(@RequestBody Map<String, String> data) {
-        String date = data.get("Name");
-        System.out.println(date);
+        String title = data.get("Name");
+        System.out.println("Post request received");
     }
+    
 }
 
 
