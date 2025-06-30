@@ -7,8 +7,7 @@ import jakarta.persistence.*;
 public class Expense {
     // defines the primary key
     @Id 
-    // auto generates the primary key
-    @GeneratedValue(Strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     String name;
@@ -25,6 +24,9 @@ public class Expense {
         this.recurr = recurr;
     }
 
+    public Integer getId() {
+        return(this.id);
+    }
+
     //the rest are just method on this class, I will deal with later
-    
 }
