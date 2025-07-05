@@ -10,23 +10,41 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    String name;
-    Double expense_val;
-    boolean recurr;
+    String title;
+    int value;
 
-    //jpa requires this for some reason
     public Expense() {}
 
-    //actual constructor
-    public Expense(String name, Double expense_val, boolean recurr) {
-        this.name = name;
-        this.expense_val = expense_val;
-        this.recurr = recurr;
+    public Expense(String title, int value) {
+        this.title = title;
+        this.value = value;
     }
 
-    public Integer getId() {
-        return(this.id);
+    public String gettitle() {
+        return(this.title);
     }
+
+    public int getvalue() {
+        return(this.value);
+    }
+
+    // String name;
+    // Double expense_val;
+    // boolean recurr;
+
+    // //jpa requires this for some reason
+    // public Expense() {}
+
+    // //actual constructor
+    // public Expense(String name, Double expense_val, boolean recurr) {
+    //     this.name = name;
+    //     this.expense_val = expense_val;
+    //     this.recurr = recurr;
+    // }
+
+    // public Integer getId() {
+    //     return(this.id);
+    // }
 
     //the rest are just method on this class, I will deal with later
 }
