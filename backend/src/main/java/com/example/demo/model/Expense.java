@@ -1,5 +1,4 @@
-package main.java.com.example.demo.model;
-
+package com.example.demo.model;
 import jakarta.persistence.*;
 
 // this marks it as a JPA entity

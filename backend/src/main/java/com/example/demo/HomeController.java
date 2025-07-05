@@ -1,8 +1,8 @@
 package com.example.demo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
-import main.java.com.example.demo.repository.ExpenseRepo;
-import main.java.com.example.demo.model.Expense;
+import com.example.demo.repository.ExpenseRepo;
+import com.example.demo.model.Expense;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @CrossOrigin(origins = "*") 
