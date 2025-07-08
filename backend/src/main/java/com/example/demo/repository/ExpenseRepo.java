@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 // this provides the crud operations for the entity created
 @Repository
-public interface ExpenseRepo extends CrudRepository<Expense, Long>{ 
+public interface ExpenseRepo extends CrudRepository<Expense, Integer>{ 
 } 

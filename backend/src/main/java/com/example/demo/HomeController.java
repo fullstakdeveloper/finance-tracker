@@ -26,6 +26,13 @@ public class HomeController {
     public List<Expense> get(){
         return (List<Expense>) expenseRepo.findAll();
     }
+
+    // PathVariables links the "/{id} variable to the parameter"
+    @DeleteMapping("/{id}")  
+    public void deleteExpense(@PathVariable int id) {
+        System.out.println("got request");
+        expenseRepo.deleteById(id);
+    }   
     
 }
 

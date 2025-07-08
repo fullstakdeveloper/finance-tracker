@@ -27,6 +27,10 @@ public class Expense {
         return(this.value);
     }
 
+    public int getid() {
+        return(this.id);
+    }
+
     // String name;
     // Double expense_val;
     // boolean recurr;

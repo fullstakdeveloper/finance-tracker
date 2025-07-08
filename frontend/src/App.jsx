@@ -27,6 +27,11 @@ function App() {
     }
   }
 
+  const deleteExpense = async (id) => {
+    const response = await axios.delete(`http://localhost:8080/${id}`);
+    handleGetAll();
+  }
+
   useEffect(() => {
     handleGetAll();
   }, [])
@@ -62,15 +67,16 @@ function App() {
       <div>
         <h1>All Expenses</h1>
         {allExpense.map(expense => {
+          console.log(expense)
           return (
-          <div className = "border bg-red-500 m-[10px] w-[200px] rounded">
+          <div className = "border bg-red-500 m-[10px] w-[200px] rounded" key = {expense.id}>
             
-            <div key = {expense.id}>
+            <div >
               <p>{expense.title}</p>
               <p>{expense.value}</p>
             </div>
           
-            <button className = "border m-[2px]">Delete</button>
+            <button onClick = {() => {deleteExpense(expense.id)}} className = "border m-[2px]">Delete</button>
           </div>
           );
         })}
