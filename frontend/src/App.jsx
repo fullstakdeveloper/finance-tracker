@@ -5,14 +5,25 @@ import './App.css';
 function App() {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState(0);
+  const [allExpense, setAllExpense] = useState("")
 
 
-  const handleSubmit = (e) => {
+  const handlePost = (e) => {
     e.preventDefault();
     axios.post("http://localhost:8080/post", {
       title: title, 
       value: value, 
     });
+  }
+
+  const handleGetAll = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/get');
+      const data = await response.json()
+      setAllExpense(data)
+    } catch {
+      console.log("Failed handle")
+    }
   }
 
  
@@ -37,10 +48,15 @@ function App() {
 
         <button 
           className = "border w-[100px] hover:bg-amber-100"
-          onClick = {handleSubmit}
+          onClick = {handlePost}
           type = "submit"
         >Submit</button>
       </form>
+
+
+      <div>
+        <h1>All Expenses</h1>
+      </div>
     </div>
   )
 }
