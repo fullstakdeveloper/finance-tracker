@@ -1,21 +1,30 @@
 package com.example.demo;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.repository.ExpenseRepo;
 import com.example.demo.model.Expense;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 @CrossOrigin(origins = "*") 
 @RestController
 public class HomeController {
 
-     @Autowired
+    //What is this doing!
+    @Autowired
     private ExpenseRepo expenseRepo;
 
-    //sends the pst request to this method
+    //routes the /post request to this function
     @PostMapping("/post")
     public Expense post(@RequestBody Expense expense) {
+        System.out.println(expense);
+
         return expenseRepo.save(expense);
+    }
+
+    //routes the /get request to this function  
+    @GetMapping("/get")
+    public List<Expense> get(){
+        return (List<Expense>) expenseRepo.findAll();
     }
     
 }

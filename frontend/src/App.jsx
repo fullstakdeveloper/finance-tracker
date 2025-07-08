@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
 function App() {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState(0);
-  const [allExpense, setAllExpense] = useState("")
+  const [allExpense, setAllExpense] = useState([])
 
 
   const handlePost = (e) => {
@@ -14,17 +14,22 @@ function App() {
       title: title, 
       value: value, 
     });
+    handleGetAll()
   }
 
   const handleGetAll = async () => {
     try {
       const response = await fetch('http://localhost:8080/get');
-      const data = await response.json()
-      setAllExpense(data)
+      const data = await response.json();
+      setAllExpense(data);
     } catch {
-      console.log("Failed handle")
+      console.log("Failed handle");
     }
   }
+
+  useEffect(() => {
+    handleGetAll();
+  }, [])
 
  
   return (
@@ -56,6 +61,19 @@ function App() {
 
       <div>
         <h1>All Expenses</h1>
+        {allExpense.map(expense => {
+          return (
+          <div className = "border bg-red-500 m-[10px] w-[200px] rounded">
+            
+            <div key = {expense.id}>
+              <p>{expense.title}</p>
+              <p>{expense.value}</p>
+            </div>
+          
+            <button className = "border m-[2px]">Delete</button>
+          </div>
+          );
+        })}
       </div>
     </div>
   )
