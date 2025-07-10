@@ -1,5 +1,6 @@
 package com.example.demo.model;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 // this marks it as a JPA entity
 @Entity
@@ -11,6 +12,8 @@ public class Expense {
 
     String title;
     int value;
+    Boolean recurr;
+    LocalDateTime createdAt = LocalDateTime.now();
 
     public Expense() {}
 
