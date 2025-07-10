@@ -4,13 +4,16 @@ import './App.css';
 
 function App() {
   const [allExpense, setAllExpense] = useState([]);
-  const [editCurr, setEditCurr] = useState(false);
-  const [editId, setEditId] = useState("");
-
 
   const AddForm = () => {
     const [title, setTitle] = useState("");
     const [value, setValue] = useState(0);
+
+    const handlePost = async(e) => {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:8080/post", {title: title, alue: value, })
+    setAllExpense(prev => [...prev, response.data]);
+  }
 
     return(
       <form className  = "flex flex-col">
@@ -39,42 +42,23 @@ function App() {
     );
   }
 
-  const handlePost = async(e) => {
-    e.preventDefault();
-    const response = await axios.post("http://localhost:8080/post", {
-      title: title, 
-      value: value, 
-    });
-    handleGetAll()
-  }
+  const AllExpenseList = () => {
+    const [editCurr, setEditCurr] = useState(false);
+    const [editId, setEditId] = useState("");
 
-  const handleGetAll = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/get');
-      const data = await response.json();
-      setAllExpense(data);
-    } catch {
-      console.log("Failed handle");
+    const deleteExpense = async (id) => {
+      const response = await axios.delete(`http://localhost:8080/${id}`);
+      setAllExpense(prev => prev.filter(exp => exp.id !== id));
     }
-  }
 
-  const deleteExpense = async (id) => {
-    const response = await axios.delete(`http://localhost:8080/${id}`);
-    handleGetAll();
-  }
-
-  useEffect(() => {
-    handleGetAll();
-  }, [])
-
-  const EditForm = (props) => {
+    const EditForm = (props) => {
     const [editExpense, setEditExpense] = useState({Title: "", Value: ""});
 
     const sendEditRequest = async (id, editVal) => {
       const response  = await axios.put(`http://localhost:8080/${id}`, {
         title: editVal.Title, value: editVal.value
       });
-      handleGetAll();
+      setAllExpense(prev => prev.map(exp => exp.id === id ? response.data : exp))
     }
 
     return (
@@ -113,34 +97,50 @@ function App() {
       </form>
       </div>
     );
-  };
+    };
 
+    const TransUI = () => {
+      return(
+        <div>
+        <h1>All Expenses</h1>
+          {allExpense.map(expense => {
+          return (
+            <div className = "border bg-red-500 m-[10px] w-[400px] rounded" key = {expense.id}>
+              
+              <div className = "flex">
+                <p>{expense.title}</p>
+                <p>{expense.value}</p>
+                <button onClick = {() => {deleteExpense(expense.id)}} className = "border m-[2px] p-[2px]">Delete</button>
+                <button onClick = {() => {setEditCurr(true); setEditId(expense.id)}} className = "border m-[2px] p-[2px]">Edit</button>
+              </div>
+          
+            </div>
+          );})}
+
+        {editCurr ?  <EditForm id={editId}/>: <p>Not Editing</p> }
+      </div>
+      );
+    }
+
+    return(<TransUI/>);
+  }
+
+  const handleGetAll = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/get');
+      const data = await response.json();
+      setAllExpense(data);
+    } catch {
+      console.log("Failed handle");
+    }
+  }
+
+  useEffect(() => {handleGetAll();}, [])
  
   return (
     <div className = "flex flex-col m-[5px]">
       <AddForm/>
-
-
-      <div>
-        <h1>All Expenses</h1>
-        {allExpense.map(expense => {
-          return (
-          <div className = "border bg-red-500 m-[10px] w-[200px] rounded" key = {expense.id}>
-            
-            <div >
-              <p>{expense.title}</p>
-              <p>{expense.value}</p>
-            </div>
-          
-            <button onClick = {() => {deleteExpense(expense.id)}} className = "border m-[2px]">Delete</button>
-            <button onClick = {() => {setEditCurr(true); setEditId(expense.id)}} className = "border m-[2px] p-[2px]">Edit</button>
-          </div>
-          );
-        })}
-
-        {editCurr ?  <EditForm id={editId}/>: <p>Not Editing</p> }
-
-      </div>
+      <AllExpenseList/>
     </div>
   )
 }
