@@ -16,24 +16,28 @@ public class HomeController {
     //routes the /post request to this function
     @PostMapping("/post")
     public Expense post(@RequestBody Expense expense) {
-        System.out.println(expense);
-
         return expenseRepo.save(expense);
     }
 
     //routes the /get request to this function  
     @GetMapping("/get")
     public List<Expense> get(){
-        return (List<Expense>) expenseRepo.findAll();
+        return expenseRepo.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     // PathVariables links the "/{id} variable to the parameter"
     @DeleteMapping("/{id}")  
     public void deleteExpense(@PathVariable int id) {
-        System.out.println("got request");
         expenseRepo.deleteById(id);
     }   
-    
+
+    @PutMapping("/{id}")
+    public Expense put(@PathVariable int id, @RequestBody Expense expenseUpdate) {
+        Expense expense = expenseRepo.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
+        expense.settitle(expenseUpdate.gettitle());
+        return expenseRepo.save(expense);
+    }
+
 }
 
 

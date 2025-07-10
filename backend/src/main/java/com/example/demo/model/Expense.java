@@ -31,23 +31,7 @@ public class Expense {
         return(this.id);
     }
 
-    // String name;
-    // Double expense_val;
-    // boolean recurr;
-
-    // //jpa requires this for some reason
-    // public Expense() {}
-
-    // //actual constructor
-    // public Expense(String name, Double expense_val, boolean recurr) {
-    //     this.name = name;
-    //     this.expense_val = expense_val;
-    //     this.recurr = recurr;
-    // }
-
-    // public Integer getId() {
-    //     return(this.id);
-    // }
-
-    //the rest are just method on this class, I will deal with later
+    public void settitle(String newtitle) {
+        this.title = newtitle;
+    }
 }
