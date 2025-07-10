@@ -8,30 +8,46 @@ function App() {
   const AddForm = () => {
     const [title, setTitle] = useState("");
     const [value, setValue] = useState(0);
+    const [recurring, setRecurring] = useState(false);
 
     const handlePost = async(e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/post", {title: title, value: value, })
+    const response = await axios.post("http://localhost:8080/post", {title: title, value: value, recurr: recurring})
     setAllExpense(prev => [...prev, response.data]);
     }
 
     return(
-      <form className  = "flex flex-col">
-        <label>Expense title</label>
-        <input 
-          className = "border w-[200px]"
-          value = {title}
-          type = "text"
-          onChange = {(e) => setTitle(e.target.value)}
-        />
+      <form className  = "flex flex-col border w-fit p-[10px] rounded m-[10px]">
+        <label className = "flex flex-col">
+          Title:
+          <input 
+            className = "border w-[200px]"
+            value = {title}
+            type = "text"
+            onChange = {(e) => setTitle(e.target.value)}
+          />
+        </label>
 
-        <label>Expense value</label>
-        <input 
-          className = "border w-[200px]"
-          value = {value}
-          type = "number"
-          onChange = {(e) => setValue(Number(e.target.value))}
-        />
+        <label className = "flex flex-col">
+          Amount: 
+          <input 
+            className = "border w-[200px]"
+            value = {value}
+            type = "number"
+            onChange = {(e) => setValue(Number(e.target.value))}
+          />
+        </label>
+
+        
+        <label className = "flex flex-row items-center">
+          Recurring:
+          <input
+            type="checkbox"
+            checked={recurring}
+            onChange={(e) => setRecurring(e.target.checked)}
+            className = "m-[5px]"
+          />
+        </label>
 
         <button 
           className = "border w-[100px] hover:bg-amber-100"
@@ -105,15 +121,36 @@ function App() {
 
     const TransUI = () => {
       return(
-        <div>
+        <div className = "flex flex-row flex-wrap justify-center">
           {allExpense.map(expense => {
+            console.log('Rendering expense:', expense); // Add this line
+            console.log('expense.recurr value:', expense.recurr); // And this line
           return (
-            <div className = "bg-slate-900 m-[10px] w-[400px] h-[120px] rounded flex flex-col justify-center border border-slate-600/50" key = {expense.id}>
+            <div className = "bg-slate-900 m-[10px] w-[400px] h-fit rounded flex flex-col justify-center " key = {expense.id}>
               
               <div className = "flex flex-col m-[10px]">
-                <div className = "flex flex-row justify-between items-start text-amber-400 m-[10px] font-bold text-[20px] ">
-                  <p className ="">{expense.title}</p>
-                  <p>{expense.value}</p>
+                <div className = "flex flex-row justify-between items-start text-amber-400   font-bold text-[20px] ">
+                  <p className = "p-[2px]">{expense.title}</p>
+                  <p className = "border rounded pr-[5px] pl-[5px] text-black bg-amber-400 font-normal text-[15px]">{expense.recurr ? "recurring": "non-recurring"}</p>
+                </div>
+
+                <div className = " mb-[10px]">
+                  <table class="min-w-full border border-gray-700 rounded-lg overflow-hidden">
+                    <thead class="bg-gray-800 text-gray-400">
+                      <tr>
+                        <th class="py-2 px-4 text-left">Date</th>
+                        <th class="py-2 px-4 text-left">Description</th>
+                        <th class="py-2 px-4 text-left">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-gray-800 text-gray-200">
+                      <tr class="border-t border-gray-700">
+                        <td class="py-2 px-4">2025-07-01</td>
+                        <td class="py-2 px-4">Paycheck</td>
+                        <td class="py-2 px-4">5000</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
 
                 <div className = "flex flex-row">

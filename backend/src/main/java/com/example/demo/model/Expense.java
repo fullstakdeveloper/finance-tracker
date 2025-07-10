@@ -17,9 +17,10 @@ public class Expense {
 
     public Expense() {}
 
-    public Expense(String title, int value) {
+    public Expense(String title, int value, Boolean recurr) {
         this.title = title;
         this.value = value;
+        this.recurr = recurr;
     }
 
     public String gettitle() {
@@ -36,5 +37,13 @@ public class Expense {
 
     public void settitle(String newtitle) {
         this.title = newtitle;
+    }
+
+    public Boolean getrecurr() {
+        return this.recurr;
+    }
+
+    public void setrecurr(Boolean newrecurr) {
+        this.recurr = newrecurr;
     }
 }
