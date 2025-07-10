@@ -11,9 +11,9 @@ function App() {
 
     const handlePost = async(e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/post", {title: title, alue: value, })
+    const response = await axios.post("http://localhost:8080/post", {title: title, value: value, })
     setAllExpense(prev => [...prev, response.data]);
-  }
+    }
 
     return(
       <form className  = "flex flex-col">
@@ -52,72 +52,88 @@ function App() {
     }
 
     const EditForm = (props) => {
-    const [editExpense, setEditExpense] = useState({Title: "", Value: ""});
+      const [editExpense, setEditExpense] = useState({Title: "", Value: ""});
 
-    const sendEditRequest = async (id, editVal) => {
-      const response  = await axios.put(`http://localhost:8080/${id}`, {
-        title: editVal.Title, value: editVal.value
-      });
-      setAllExpense(prev => prev.map(exp => exp.id === id ? response.data : exp))
-    }
+      const sendEditRequest = async (id, editVal) => {
+        const response  = await axios.put(`http://localhost:8080/${id}`, {
+          title: editVal.Title, value: editVal.value
+        });
+        setAllExpense(prev => prev.map(exp => exp.id === id ? response.data : exp))
+      }
+      return (
+        <div className = "fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/10 z-50">
+          <div className = "border rounded bg-gradient-to-bl from-slate-500 to-slate- border-amber-500">
+            <form className="flex flex-col m-[5px]" onSubmit={(e) => e.preventDefault()}>
+              <label  className = "text-amber-500">Title</label>
+              <input 
+                className="w-[200px] border rounded h-[30px] text-xl" 
+                value={editExpense.Title}
+                onChange={(e) => setEditExpense({...editExpense, Title: e.target.value})}
+                type="text"
+              />
 
-    return (
-      <div className = "fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50">
-      <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
-        <label>Title</label>
-        <input 
-          className="w-[200px] border" 
-          value={editExpense.Title}
-          onChange={(e) => setEditExpense({...editExpense, Title: e.target.value})}
-          type="text"
-        />
+              <label className = "text-amber-500">Amount</label>
+              <input 
+                className="w-[200px] border rounded h-[30px] text-xl"
+                value={editExpense.Value}
+                onChange={(e) => setEditExpense({...editExpense, Value: e.target.value})}
+                type='text'
+              />
 
-        <label>Amount</label>
-        <input 
-          className="w-[200px] border"
-          value={editExpense.Value}
-          onChange={(e) => setEditExpense({...editExpense, Value: e.target.value})}
-          type='text'
-        />
+              <div className = "flex flex-row m-[5px]">
+                <button 
+                  className=" border w-1/2 m-[1px] rounded h-[50px] bg-green-700"
+                  type="button"
+                  onClick = {() => {sendEditRequest(props.id, editExpense); setEditCurr(false)}}
+                > 
+                  Save
+                </button>
 
-        <button 
-          className="w-[200px] border"
-          type="button"
-          onClick = {() => {sendEditRequest(props.id, editExpense); setEditCurr(false)}}
-        >
-          Save
-        </button>
-        <button 
-          className="w-[200px] border"
-          type="button"
-          onClick={() => {setEditCurr(false)}}
-        >
-          Cancel
-        </button>
-      </form>
-      </div>
-    );
+                <button 
+                  className="w-1/2 border m-[1px] h-[50px] bg-slate-600 text-white hover:bg-slate-700 px-4 py-2 rounded"
+                  type="button"
+                  onClick={() => {setEditCurr(false)}}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
     };
 
     const TransUI = () => {
       return(
         <div>
-        <h1>All Expenses</h1>
           {allExpense.map(expense => {
           return (
-            <div className = "border bg-red-500 m-[10px] w-[400px] rounded" key = {expense.id}>
+            <div className = "bg-slate-900 m-[10px] w-[400px] h-[120px] rounded flex flex-col justify-center border border-slate-600/50" key = {expense.id}>
               
-              <div className = "flex">
-                <p>{expense.title}</p>
-                <p>{expense.value}</p>
-                <button onClick = {() => {deleteExpense(expense.id)}} className = "border m-[2px] p-[2px]">Delete</button>
-                <button onClick = {() => {setEditCurr(true); setEditId(expense.id)}} className = "border m-[2px] p-[2px]">Edit</button>
+              <div className = "flex flex-col m-[10px]">
+                <div className = "flex flex-row justify-between items-start text-amber-400 m-[10px] font-bold text-[20px] ">
+                  <p className ="">{expense.title}</p>
+                  <p>{expense.value}</p>
+                </div>
+
+                <div className = "flex flex-row">
+                  <button 
+                    onClick = {() => {deleteExpense(expense.id)}} 
+                    className = "border m-[2px] p-[2px] w-1/2 bg-slate-800 border-slate-600 h-[50px] rounded text-white font-semibold hover:bg-red-600 transition-colors duration-200"
+                  >Delete</button>
+
+                  <button 
+                    onClick = {() => {setEditCurr(true); setEditId(expense.id)}} 
+                    className = "border m-[2px] p-[2px] w-1/2 bg-slate-800 border-slate-600 h-[50px] rounded text-white font-semibold hover:bg-blue-600 transition-colors duration-200"
+                  >Edit</button>
+                </div>
+
               </div>
           
             </div>
           );})}
 
-        {editCurr ?  <EditForm id={editId}/>: <p>Not Editing</p> }
+        {editCurr ?  <EditForm id={editId}/>: <p></p> }
       </div>
       );
     }
@@ -138,7 +154,7 @@ function App() {
   useEffect(() => {handleGetAll();}, [])
  
   return (
-    <div className = "flex flex-col m-[5px]">
+    <div className = "flex flex-col bg-slate-800 w-dvw h-dvh">
       <AddForm/>
       <AllExpenseList/>
     </div>

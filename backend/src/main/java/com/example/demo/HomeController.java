@@ -22,14 +22,14 @@ public class HomeController {
     //routes the /get request to this function  
     @GetMapping("/get")
     public List<Expense> get(){
-        return expenseRepo.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return (List<Expense>) expenseRepo.findAll();
     }
 
     // PathVariables links the "/{id} variable to the parameter"
     @DeleteMapping("/{id}")  
     public void deleteExpense(@PathVariable int id) {
         expenseRepo.deleteById(id);
-    }   
+    }
 
     @PutMapping("/{id}")
     public Expense put(@PathVariable int id, @RequestBody Expense expenseUpdate) {
