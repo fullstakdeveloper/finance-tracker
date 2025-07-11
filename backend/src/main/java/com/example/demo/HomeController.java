@@ -35,6 +35,8 @@ public class HomeController {
     public Expense put(@PathVariable int id, @RequestBody Expense expenseUpdate) {
         Expense expense = expenseRepo.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
         expense.settitle(expenseUpdate.gettitle());
+        expense.setvalue(expenseUpdate.getvalue());
+        expense.setrecurr(expenseUpdate.getrecurr());
         return expenseRepo.save(expense);
     }
 

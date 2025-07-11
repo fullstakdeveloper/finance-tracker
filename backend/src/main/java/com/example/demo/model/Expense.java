@@ -35,12 +35,16 @@ public class Expense {
         return(this.id);
     }
 
+    public Boolean getrecurr() {
+        return this.recurr;
+    }
+
     public void settitle(String newtitle) {
         this.title = newtitle;
     }
 
-    public Boolean getrecurr() {
-        return this.recurr;
+    public void setvalue(int newvalue) {
+        this.value = newvalue;
     }
 
     public void setrecurr(Boolean newrecurr) {
