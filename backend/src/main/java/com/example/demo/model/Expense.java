@@ -1,6 +1,5 @@
 package com.example.demo.model;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 // this marks it as a JPA entity
 @Entity
@@ -13,14 +12,15 @@ public class Expense {
     String title;
     int value;
     Boolean recurr;
-    LocalDateTime createdAt = LocalDateTime.now();
+    String date;
 
     public Expense() {}
 
-    public Expense(String title, int value, Boolean recurr) {
+    public Expense(String title, int value, Boolean recurr, String date) {
         this.title = title;
         this.value = value;
         this.recurr = recurr;
+        this.date = date;
     }
 
     public String gettitle() {
@@ -39,6 +39,10 @@ public class Expense {
         return this.recurr;
     }
 
+    public String getdate() {
+        return this.date;
+    }
+
     public void settitle(String newtitle) {
         this.title = newtitle;
     }
@@ -49,5 +53,9 @@ public class Expense {
 
     public void setrecurr(Boolean newrecurr) {
         this.recurr = newrecurr;
+    }
+
+    public void setdate(String newdate) {
+        this.date = newdate;
     }
 }

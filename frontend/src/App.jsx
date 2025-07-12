@@ -9,15 +9,17 @@ function App() {
     const [title, setTitle] = useState("Untitled");
     const [value, setValue] = useState(0);
     const [recurr, setRecurr] = useState(false);
+    const [date, setDate] = useState(() => {return new Date().toISOString().split('T')[0];});
 
     const handlePost = async(e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/post", {title: title, value: value, recurr: recurr})
+    const response = await axios.post("http://localhost:8080/post", {title: title, value: value, recurr: recurr, date:date})
     setAllExpense(prev => [...prev, response.data]);
+    console.log(allExpense)
     }
 
     return(
-      <form className  = "flex flex-col border w-fit p-[10px] rounded m-[10px]">
+      <form className  = "flex flex-col border w-fit p-[10px] rounded m-[10px] text-white">
         <label className = "flex flex-col">
           Title:
           <input 
@@ -35,6 +37,16 @@ function App() {
             value = {value}
             type = "number"
             onChange = {(e) => setValue(Number(e.target.value))}
+          />
+        </label>
+
+        <label className = "flex flex-col">
+          Date: Click to Edit
+          <input
+            type="date"
+            value={date}
+            onChange={(e)=> setDate(e.target.value)}
+            placeholder="Select date"
           />
         </label>
 
@@ -68,7 +80,12 @@ function App() {
     }
 
     const EditForm = (props) => {
-      const [editExpense, setEditExpense] = useState({title: props.expense.title, value: props.expense.value, recurr: props.expense.recurr});
+      const [editExpense, setEditExpense] = useState({
+        title: props.expense.title, 
+        value: props.expense.value, 
+        recurr: props.expense.recurr, 
+        date: props.expense.date
+      });
 
       const sendEditRequest = async (id, editVal) => {
         const response  = await axios.put(`http://localhost:8080/${id}`, {
@@ -96,6 +113,16 @@ function App() {
                 onChange={(e) => setEditExpense({...editExpense, value: e.target.value})}
                 type='text'
               />
+
+              <label className = "flex flex-col">
+                Date: Click to Edit
+                <input
+                  type="date"
+                  value={editExpense.date}
+                  onChange={(e)=> setDate(e.target.value)}
+                  placeholder="Select date"
+                />
+              </label>
 
               <label className = "flex flex-row items-center">
                 Recurring:
@@ -156,7 +183,7 @@ function App() {
                     </thead>
                     <tbody class="bg-gray-800 text-gray-200">
                       <tr class="border-t border-gray-700">
-                        <td class="py-2 px-4">2025-07-01</td>
+                        <td class="py-2 px-4">{expense.date}</td>
                         <td class="py-2 px-4">Paycheck</td>
                         <td class="py-2 px-4">{expense.value}</td>
                       </tr>
