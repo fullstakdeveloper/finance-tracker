@@ -6,7 +6,7 @@ import './App.css';
 
 function App() {
   const [allExpense, setAllExpense] = useState([]);
-
+  
   const AddForm = () => {
     const [title, setTitle] = useState("Untitled");
     const [value, setValue] = useState(0);
@@ -229,12 +229,21 @@ function App() {
     }
   }
 
+  const GetLinkToken = async() => {
+    try {
+      const response = axios.get('http://localhost:8080/get/link_token')
+      const data = await response.json()
+    } catch {
+      console.log("Link Token Fetch Failed")
+    }
+  }
+
   useEffect(() => {handleGetAll();}, [])
  
   return (
     <div className = "flex flex-col bg-slate-800 w-dvw h-dvh">
-      <AddForm/>
-      <AllExpenseList/>
+      {/* <AddForm/>
+      <AllExpenseList/> */}
     </div>
   )
 }
