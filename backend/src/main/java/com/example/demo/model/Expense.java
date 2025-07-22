@@ -33,7 +33,7 @@ public class Expense {
 
     public int getid() {
         return(this.id);
-    }
+    }   
 
     public Boolean getrecurr() {
         return this.recurr;
