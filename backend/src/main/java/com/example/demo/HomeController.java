@@ -40,10 +40,11 @@ public class HomeController {
         return expenseRepo.save(expense);
     }
 
-    // @GetMapping("/get/link_token")
-    // public String create_link_token() {
-        
-    // }
+    @GetMapping("/get/link_token")
+    public String create_link_token() {
+        System.out.println("Got Command");
+        return "Done";
+    }
 
 }
 

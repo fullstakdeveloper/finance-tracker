@@ -229,10 +229,9 @@ function App() {
     }
   }
 
-  const GetLinkToken = async() => {
+  const GetLinkToken = async () => {
     try {
-      const response = axios.get('http://localhost:8080/get/link_token')
-      const data = await response.json()
+      const response = axios.get('http://localhost:8080/get/link_token');
     } catch {
       console.log("Link Token Fetch Failed")
     }
@@ -244,6 +243,7 @@ function App() {
     <div className = "flex flex-col bg-slate-800 w-dvw h-dvh">
       {/* <AddForm/>
       <AllExpenseList/> */}
+      <button onClick={GetLinkToken} className = "border bg-red-500 w-[100px]">Click Me</button>
     </div>
   )
 }
