@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.repository.ExpenseRepo;
 import com.example.demo.model.Expense;
