@@ -7,3 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExpenseRepo extends CrudRepository<Expense, Integer>{ 
 } 
+
+// what the hell
