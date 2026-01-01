@@ -67,9 +67,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.plaid</groupId>
-			<artifactId>plaid-java</artifactId>
-			<version>38.0.0</version>
+    		<groupId>com.plaid</groupId>
+    		<artifactId>plaid-java</artifactId>
+    		<version>39.0.0</version>
 		</dependency>
 		
 	</dependencies>
