@@ -1,37 +1,34 @@
+package com.example.demo.config;
 
-// import com.plaid.client.PlaidApi;
-import com.plaid.client.*;
-// private PlaidApi plaidClient;
+import com.plaid.client.ApiClient;
+import com.plaid.client.request.PlaidApi;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-// package com.example.demo.config;
+import java.util.HashMap;
+import java.util.Map;
 
-// import com.plaid.client.ApiClient;
-// import com.plaid.client.PlaidApi;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import java.util.HashMap;
+@Configuration
+public class PlaidConfig {
 
-// @Configuration
-// public class PlaidConfig {
+    @Value("${plaid.clientId}")
+    private String clientId;
 
-//     @Bean
-//     public PlaidApi plaidClient() {
-//         // Load your credentials
-//         String clientId = System.getenv("PLAID_CLIENT_ID");
-//         String secret = System.getenv("PLAID_SECRET");
+    @Value("${plaid.secret}")
+    private String secret;
 
-//         // Set up API keys
-//         HashMap<String, String> apiKeys = new HashMap<>();
-//         apiKeys.put("clientId", clientId);
-//         apiKeys.put("secret", secret); 
+    @Bean
+    public PlaidApi plaidClient() {
+        Map<String, String> apiKeys = new HashMap<>();
+        apiKeys.put("clientId", clientId);
+        apiKeys.put("secret", secret);
 
-//         // Initialize ApiClient
-//         ApiClient apiClient = new ApiClient(apiKeys);
-//         apiClient.setPlaidAdapter(ApiClient.Sandbox); // or Development/Production
+        ApiClient apiClient = new ApiClient(apiKeys);
+        
+        // Set your environment: ApiClient.Sandbox, ApiClient.Development, or ApiClient.Production
+        apiClient.setPlaidAdapter(ApiClient.Sandbox); 
 
-//         // Create PlaidApi service
-//         return apiClient.createService(PlaidApi.class);
-//     }
-// }
-
-// //finish this later, alirght, this ir your folal 
+        return apiClient.createService(PlaidApi.class);
+    }
+}
