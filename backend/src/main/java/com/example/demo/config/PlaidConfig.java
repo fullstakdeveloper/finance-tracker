@@ -1,5 +1,4 @@
 package com.example.demo.config;
-
 import com.plaid.client.ApiClient;
 import com.plaid.client.request.PlaidApi;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,9 +25,7 @@ public class PlaidConfig {
 
         ApiClient apiClient = new ApiClient(apiKeys);
         
-        // Set your environment: ApiClient.Sandbox, ApiClient.Development, or ApiClient.Production
         apiClient.setPlaidAdapter(ApiClient.Sandbox); 
-
         return apiClient.createService(PlaidApi.class);
     }
 }
