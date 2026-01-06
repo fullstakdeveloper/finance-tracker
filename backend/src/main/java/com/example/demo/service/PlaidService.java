@@ -33,7 +33,7 @@ public class PlaidService {
 
     }
 
-    public String createLinkToken(String userId) {
+    public String createLinkToken(String userId) throws IOException{
         //created object for user
         LinkTokenCreateRequestUser user = new LinkTokenCreateRequestUser().clientUserId(userId);
 
@@ -44,7 +44,12 @@ public class PlaidService {
         Response<LinkTokenCreateResponse> response = plaidApi.linkTokenCreate(request).execute();  
         
         //returning value
-        return response.body().getLinkToken();
+        if (response.isSuccessful() && response.body() != null) {
+            return response.body().getLinkToken();
+        } else {
+            //showing error
+            throw new RuntimeException("failed to create link token: " + response.errorBody().string());
+        }
     }
 
     
